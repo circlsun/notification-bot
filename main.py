@@ -5,25 +5,22 @@ import telegram
 from dotenv import load_dotenv
 
 
-def request_devmen(devmen_token, timestamp):
+def run_bot(devmen_token, tg_token, tg_chat_id):
     url = 'https://dvmn.org/api/long_polling/'
     head = {
         'Authorization': f'Token {devmen_token}'
     }
-    payload = {
-        'timeout': 60,  # seconds
-        'timestamp': timestamp
-    }
-    response = requests.get(url, headers=head, params=payload)
-    response.raise_for_status
-    return response.json()
-
-
-def run_bot(devmen_token, tg_token, tg_chat_id):
     timestamp = None
     while True:
+        payload = {
+            'timeout': 60,  # seconds
+            'timestamp': timestamp
+        }
         try:
-            status_info = request_devmen(devmen_token, timestamp)
+            response = requests.get(url, headers=head, params=payload)
+            status_info = response.json()
+            status_info.raise_for_status
+
             if status_info['status'] == 'timeout':
                 timestamp = status_info['timestamp_to_request']
             elif status_info['status'] == 'found':
