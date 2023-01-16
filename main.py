@@ -19,7 +19,7 @@ def run_bot(devmen_token, tg_token, tg_chat_id):
         try:
             response = requests.get(url, headers=head, params=payload)
             status_info = response.json()
-            status_info.raise_for_status
+            response.raise_for_status
 
             if status_info['status'] == 'timeout':
                 timestamp = status_info['timestamp_to_request']
