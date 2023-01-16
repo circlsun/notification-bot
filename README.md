@@ -19,11 +19,11 @@ TELEGRAM_CHAT_ID='*********'
 DEVMEN_TOKEN='******************************************'
 ```
 
-`TELEGRAM_TOKEN`: You also need to create a Telegram bot. To do this, contact [BotFather](https://telegram.me/BotFather).
+`TELEGRAM_TOKEN` - If you need to create a Telegram bot. To do this, contact [BotFather](https://telegram.me/BotFather).
 
-`TELEGRAM_CHAT_ID` is a link to a public Telegram channel in which photos will be published.
+`TELEGRAM_CHAT_ID` - This is a link to a Telegram channel.
 
-`DEVMEN_TOKEN` - pause of publications in hours.
+`DEVMEN_TOKEN` - The student's personal token can be obtained here: [API-Devmen](https://dvmn.org/api/docs/).
 
 ```
 /user/main.py/
@@ -31,7 +31,7 @@ DEVMEN_TOKEN='******************************************'
 |  :
 |--bar.py
 |--.env
-
+```
 
 ## Project Goals
 
