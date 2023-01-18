@@ -68,9 +68,10 @@ def main():
     devmen_token = os.getenv('DEVMEN_TOKEN')
     tg_token = os.getenv('TELEGRAM_TOKEN')
     tg_chat_id = os.getenv('TELEGRAM_CHAT_ID')
+    tg_debug_token = os.getenv('TELEGRAM_DEBUG_TOKEN')
 
     logger.setLevel(level=logging.INFO)
-    logger.addHandler(MyLogsHandler(tg_token, tg_chat_id))
+    logger.addHandler(MyLogsHandler(tg_debug_token, tg_chat_id))
     logger.info('BingoBom!')
 
     run_bot(devmen_token, tg_token, tg_chat_id, logger)
