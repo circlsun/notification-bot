@@ -1,8 +1,10 @@
-import requests
-import time
 import os
-import telegram
+import time
 import logging
+import requests
+
+import telegram
+
 from dotenv import load_dotenv
 
 
@@ -32,6 +34,7 @@ def run_bot(devmen_token, tg_token, tg_chat_id, logger):
     timestamp = None
     bot = telegram.Bot(token=tg_token)
     logger.info('The bot is running!')
+
     while True:
         payload = {
             'timeout': 60,  # seconds
