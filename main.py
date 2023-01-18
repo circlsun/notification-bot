@@ -15,7 +15,7 @@ logger = logging.getLogger('TgLog')
 class MyLogsHandler(logging.Handler):
     """Logger handler for Telegram"""
 
-    def __init__(self, tg_token: str, tg_chat_id: str,):
+    def __init__(self, tg_token: str, tg_chat_id: str):
 
         super().__init__()
         self.tg_token = tg_token
@@ -48,10 +48,13 @@ def run_bot(devmen_token, tg_token, tg_chat_id, logger):
 
             if status_info['status'] == 'timeout':
                 timestamp = status_info['timestamp_to_request']
+
             elif status_info['status'] == 'found':
+                timestamp = status_info['last_attempt_timestamp']
                 lesson = status_info['new_attempts'][0]['lesson_title']
                 conclusion = 'The teacher liked everything, \
                     you can start the next task!'
+
                 if status_info['new_attempts'][0]['is_negative']:
                     conclusion = 'Unfortunately you have errors.'
                 message = f'Have you checked the work of "{lesson}"! \n\n' \
