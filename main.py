@@ -39,8 +39,8 @@ def run_bot(devmen_token, tg_token, tg_chat_id, logger):
         }
         try:
             response = requests.get(url, headers=head, params=payload)
-            status_info = response.json()
             response.raise_for_status
+            status_info = response.json()
 
             if status_info['status'] == 'timeout':
                 timestamp = status_info['timestamp_to_request']
@@ -59,6 +59,8 @@ def run_bot(devmen_token, tg_token, tg_chat_id, logger):
         except requests.exceptions.ConnectionError:
             time.sleep(5)
             logger.exception('Connection error!')
+        except Exception:
+            logger.exception('Error!')
 
 
 def main():
