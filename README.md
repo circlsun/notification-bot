@@ -32,6 +32,12 @@ DEVMEN_TOKEN='******************************************'
 |--bar.py
 |--.env
 ```
+## Usage
+
+Run the python script main.py with concole command:
+```
+python3 main.py
+```
 
 ## Project Goals
 
