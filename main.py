@@ -24,12 +24,13 @@ class MyLogsHandler(logging.Handler):
         self.bot.send_message(chat_id=self.tg_chat_id, text=log_entry)
 
 
-def run_bot(devmen_token, tg_token, tg_chat_id):
+def run_bot(devmen_token, tg_token, tg_chat_id, logger):
     url = 'https://dvmn.org/api/long_polling/'
     head = {
         'Authorization': f'Token {devmen_token}'
     }
     timestamp = None
+    bot = telegram.Bot(token=tg_token)
     logger.info('The bot is running!')
     while True:
         payload = {
@@ -49,7 +50,6 @@ def run_bot(devmen_token, tg_token, tg_chat_id):
                     you can start the next task!'
                 if status_info['new_attempts'][0]['is_negative']:
                     conclusion = 'Unfortunately you have errors.'
-                bot = telegram.Bot(token=tg_token)
                 message = f'Have you checked the work of "{lesson}"! \n\n' \
                           f'{conclusion}'
                 bot.send_message(text=message, chat_id=tg_chat_id)
@@ -67,11 +67,11 @@ def main():
     tg_token = os.getenv('TELEGRAM_TOKEN')
     tg_chat_id = os.getenv('TELEGRAM_CHAT_ID')
 
-    logging.basicConfig(level=logging.INFO)
+    logger.setLevel(level=logging.INFO)
     logger.addHandler(MyLogsHandler(tg_token, tg_chat_id))
-    logging.info('BingoBom!')
+    logger.info('BingoBom!')
 
-    run_bot(devmen_token, tg_token, tg_chat_id)
+    run_bot(devmen_token, tg_token, tg_chat_id, logger)
 
 
 if __name__ == '__main__':
