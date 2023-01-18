@@ -5,8 +5,23 @@ import telegram
 import logging
 from dotenv import load_dotenv
 
-logging.basicConfig(level=logging.DEBUG, format="%(levelname)s %(message)s")
-logging.info('bot started')
+
+logger = logging.getLogger('TgLog')
+
+
+class MyLogsHandler(logging.Handler):
+    """Logger handler for Telegram"""
+
+    def __init__(self, tg_token: str, tg_chat_id: str,):
+
+        super().__init__()
+        self.tg_token = tg_token
+        self.tg_chat_id = tg_chat_id
+        self.bot = telegram.Bot(token=self.tg_token)
+
+    def emit(self, record):
+        log_entry = self.format(record)
+        self.bot.send_message(chat_id=self.tg_chat_id, text=log_entry)
 
 
 def run_bot(devmen_token, tg_token, tg_chat_id):
@@ -15,6 +30,7 @@ def run_bot(devmen_token, tg_token, tg_chat_id):
         'Authorization': f'Token {devmen_token}'
     }
     timestamp = None
+    logger.info('The bot is running!')
     while True:
         payload = {
             'timeout': 60,  # seconds
@@ -39,10 +55,10 @@ def run_bot(devmen_token, tg_token, tg_chat_id):
                 bot.send_message(text=message, chat_id=tg_chat_id)
 
         except requests.exceptions.ReadTimeout:
-            pass
+            logger.exception('The Devmen is not responding')
         except requests.exceptions.ConnectionError:
             time.sleep(5)
-            print('reconnect!')
+            logger.exception('Connection error!')
 
 
 def main():
@@ -50,6 +66,10 @@ def main():
     devmen_token = os.getenv('DEVMEN_TOKEN')
     tg_token = os.getenv('TELEGRAM_TOKEN')
     tg_chat_id = os.getenv('TELEGRAM_CHAT_ID')
+
+    logging.basicConfig(level=logging.INFO)
+    logger.addHandler(MyLogsHandler(tg_token, tg_chat_id))
+    logging.info('BingoBom!')
 
     run_bot(devmen_token, tg_token, tg_chat_id)
 
