@@ -2,7 +2,11 @@ import requests
 import time
 import os
 import telegram
+import logging
 from dotenv import load_dotenv
+
+logging.basicConfig(level=logging.DEBUG, format="%(levelname)s %(message)s")
+logging.info('bot started')
 
 
 def run_bot(devmen_token, tg_token, tg_chat_id):
