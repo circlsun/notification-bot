@@ -2,7 +2,6 @@ import os
 import time
 import logging
 import requests
-import sys
 
 import telegram
 
@@ -68,7 +67,6 @@ def run_bot(devmen_token, tg_token, tg_chat_id, logger):
             logger.exception('Connection error!')
         except Exception:
             logger.exception('Error!')
-            sys.exit()
 
 
 def main():
